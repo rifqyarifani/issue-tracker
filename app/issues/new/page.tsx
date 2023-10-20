@@ -12,6 +12,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "@/app/schema";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
 
 type IssueForm = z.infer<typeof schema>;
 
@@ -26,6 +27,7 @@ const NewIssuePage = () => {
   });
   const router = useRouter();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <div className=" max-w-xl">
@@ -39,9 +41,12 @@ const NewIssuePage = () => {
           className=" space-y-3"
           onSubmit={handleSubmit(async (data) => {
             try {
+              setLoading(true);
               await axios.post("/api/issues", data);
               router.push("/issues");
+              setLoading(false);
             } catch (error) {
+              setLoading(false);
               setError("An unexpected error occured.");
             }
           })}
@@ -58,7 +63,9 @@ const NewIssuePage = () => {
             )}
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
-          <Button>Submit New Issue</Button>
+          <Button disabled={loading}>
+            Submit New Issue {loading && <Spinner />}
+          </Button>
         </form>
       </div>
     </>

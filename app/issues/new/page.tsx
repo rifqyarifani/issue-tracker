@@ -13,10 +13,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "@/app/schema";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
+import delay from "delay";
 
 type IssueForm = z.infer<typeof schema>;
 
-const NewIssuePage = () => {
+const NewIssuePage = async () => {
   const {
     register,
     control,
@@ -28,6 +29,7 @@ const NewIssuePage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  await delay(2000);
   return (
     <>
       <div className=" max-w-xl">

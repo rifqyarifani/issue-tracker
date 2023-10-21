@@ -60,7 +60,7 @@ const IssueForm = async ({ issue }: Props) => {
         >
           <TextField.Root>
             <TextField.Input
-              defaultValue={issue.title}
+              defaultValue={issue?.title}
               placeholder={`Title`}
               {...register("title")}
             />
@@ -68,7 +68,7 @@ const IssueForm = async ({ issue }: Props) => {
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
           <Controller
             name="description"
-            defaultValue={issue.description}
+            defaultValue={issue?.description}
             control={control}
             render={({ field }) => (
               <SimpleMDE placeholder={`Description`} {...field} />

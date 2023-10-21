@@ -11,8 +11,14 @@ interface Props {
 const EditIssueButton = ({ issue }: Props) => {
   return (
     <Button>
-      <Pencil2Icon />
-      <Link href={`/issues/${issue.id}/edit`}>Edit Issue</Link>
+      <Link
+        href={`/issues/${issue.id}/edit`}
+        className=" flex items-center gap-1"
+      >
+        {" "}
+        <Pencil2Icon />
+        Edit Issue
+      </Link>
     </Button>
   );
 };

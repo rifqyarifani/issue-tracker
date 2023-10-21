@@ -20,10 +20,10 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 type IssueFormData = z.infer<typeof schema>;
 
 interface Props {
-  issue: Issue;
+  issue?: Issue;
 }
 
-const IssueForm = async ({ issue }: Props) => {
+const IssueForm = ({ issue }: Props) => {
   const {
     register,
     control,
@@ -55,6 +55,7 @@ const IssueForm = async ({ issue }: Props) => {
                 await axios.post("/api/issues", data);
               }
               router.push("/issues");
+              router.refresh();
               setLoading(false);
             } catch (error) {
               setLoading(false);

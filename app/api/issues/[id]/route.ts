@@ -7,7 +7,7 @@ interface Props{
     params: {id: string}
 }
 
-export async function PUT(request: NextRequest, {params: {id}}: Props){
+export async function PATCH(request: NextRequest, {params: {id}}: Props){
 
     const body = await request.json()
     const validation = schema.safeParse(body)

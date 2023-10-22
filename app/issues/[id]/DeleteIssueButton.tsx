@@ -3,7 +3,7 @@ import { Issue } from "@prisma/client";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -13,6 +13,7 @@ interface Props {
 
 const DeleteIssueButton = ({ issue }: Props) => {
   const router = useRouter();
+  const [error, setError] = useState(false);
 
   return (
     <>
@@ -37,14 +38,34 @@ const DeleteIssueButton = ({ issue }: Props) => {
                 color="red"
                 variant="solid"
                 onClick={async () => {
-                  await axios.delete(`/api/issues/${issue.id}`);
-                  router.push("/issues");
+                  try {
+                    await axios.delete(`/api/issues/${issue.id}`);
+                    router.push("/issues");
+                  } catch (error) {
+                    setError(true);
+                  }
                 }}
               >
                 Delete Issue
               </Button>
             </AlertDialog.Action>
           </Flex>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+      <AlertDialog.Root open={error}>
+        <AlertDialog.Content>
+          <AlertDialog.Title>Error</AlertDialog.Title>
+          <AlertDialog.Description>
+            This issue could not be deleted
+          </AlertDialog.Description>
+          <Button
+            mt={"2"}
+            color="gray"
+            variant="soft"
+            onClick={() => setError(false)}
+          >
+            OK
+          </Button>
         </AlertDialog.Content>
       </AlertDialog.Root>
     </>

@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
 import { schema } from "@/app/schema";
 import prisma from "@/prisma/client";
-import { title } from "process";
+import { NextRequest, NextResponse } from "next/server";
 
 interface Props{
     params: {id: string}

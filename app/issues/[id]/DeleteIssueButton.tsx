@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Spinner from "@/app/components/Spinner";
 
 interface Props {
   issue: Issue;
@@ -14,12 +15,16 @@ interface Props {
 const DeleteIssueButton = ({ issue }: Props) => {
   const router = useRouter();
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red">Delete Issue</Button>
+          <Button color="red" disabled={loading}>
+            Delete Issue
+            {loading && <Spinner />}
+          </Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content>
           <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
@@ -39,10 +44,13 @@ const DeleteIssueButton = ({ issue }: Props) => {
                 variant="solid"
                 onClick={async () => {
                   try {
+                    setLoading(true);
                     await axios.delete(`/api/issues/${issue.id}`);
+                    setLoading(false);
                     router.push("/issues");
                   } catch (error) {
                     setError(true);
+                    setLoading(false);
                   }
                 }}
               >

@@ -8,6 +8,7 @@ import NextLink from "next/link";
 import { stat } from "fs";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
 import Pagination from "../components/Pagination";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: { status: Status; orderBy: keyof Issue; page: string };
@@ -99,3 +100,8 @@ const IssuesPage = async ({
 // export const revalidate = 0
 
 export default IssuesPage;
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issue List",
+  description: "View all project issues",
+};

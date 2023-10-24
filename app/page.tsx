@@ -2,6 +2,7 @@ import prisma from "@/prisma/client";
 import IssueSummary from "./IssueSummary";
 import LatestIssue from "./LatestIssue";
 import Pagination from "./components/Pagination";
+import IssueChart from "./IssueChart";
 
 export default async function Home() {
   const open = await prisma.issue.count({ where: { status: "OPEN" } });
@@ -13,6 +14,7 @@ export default async function Home() {
     <>
       {/* <LatestIssue /> */}
       <IssueSummary open={open} inProgress={inProgress} closed={closed} />
+      <IssueChart open={open} inProgress={inProgress} closed={closed} />
     </>
   );
 }

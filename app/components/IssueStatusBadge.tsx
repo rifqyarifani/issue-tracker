@@ -1,24 +1,24 @@
-import { Status } from "@prisma/client";
+import { Issue, Status } from "@prisma/client";
 import { Badge } from "@radix-ui/themes";
+import { stat } from "fs";
 import React, { PropsWithChildren } from "react";
 
 interface Props {
   status: Status;
 }
 
+const statusMap: Record<
+  Status,
+  { label: string; color: "red" | "violet" | "green" }
+> = {
+  OPEN: { label: "Open", color: "red" },
+  IN_PROGRESS: { label: "In Progress", color: "violet" },
+  CLOSED: { label: "Closed", color: "green" },
+};
+
 const IssueStatusBadge = ({ status }: Props) => {
   return (
-    <Badge
-      color={
-        status === "OPEN"
-          ? "red"
-          : status === "IN_PROGRESS"
-          ? "violet"
-          : "green"
-      }
-    >
-      {status}
-    </Badge>
+    <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
   );
 };
 

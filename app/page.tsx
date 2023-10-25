@@ -1,10 +1,10 @@
 import prisma from "@/prisma/client";
-import IssueSummary from "./IssueSummary";
-import LatestIssue from "./LatestIssue";
-import Pagination from "./components/Pagination";
-import IssueChart from "./IssueChart";
 import { Flex, Grid } from "@radix-ui/themes";
 import { Metadata } from "next";
+import IssueChart from "./IssueChart";
+import IssueSummary from "./IssueSummary";
+import LatestIssue from "./LatestIssue";
+
 export default async function Home() {
   const open = await prisma.issue.count({ where: { status: "OPEN" } });
   const inProgress = await prisma.issue.count({
@@ -23,6 +23,8 @@ export default async function Home() {
     </>
   );
 }
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Issue Tracker - Dashboard",

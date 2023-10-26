@@ -6,8 +6,7 @@ import { Status } from "@prisma/client";
 import { stat } from "fs";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const statuses: { label: string; value?: Status }[] = [
-  { label: "All" },
+const statuses: { label: string; value: Status }[] = [
   { label: "Open", value: "OPEN" },
   { label: "In Progress", value: "IN_PROGRESS" },
   { label: "Closed", value: "CLOSED" },
@@ -30,8 +29,9 @@ const IssueStatusFilter = () => {
     >
       <Select.Trigger placeholder="Select a filter..." />
       <Select.Content>
+        <Select.Item value="">All</Select.Item>
         {statuses.map((status) => (
-          <Select.Item key={status.label} value={status.value! || null}>
+          <Select.Item key={status.label} value={status.value}>
             {status.label}
           </Select.Item>
         ))}
